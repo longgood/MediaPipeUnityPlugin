@@ -190,6 +190,9 @@ class BuildCommand(Command):
 
     if self._is_windows():
       python_bin_path_key = 'PYTHON_BIN_PATH'
+      #os.environ[python_bin_path_key]=""
+      #print("result:",os.environ[python_bin_path_key])
+      
       if python_bin_path_key not in os.environ:
         raise RuntimeError(f'`{python_bin_path_key}` is not set')
 
@@ -390,7 +393,7 @@ class Argument:
     build_command_parser.add_argument('--desktop', choices=['cpu', 'gpu'])
     build_command_parser.add_argument('--android', choices=['arm', 'arm64'])
     build_command_parser.add_argument('--ios', choices=['arm64'])
-    build_command_parser.add_argument('--resources', action=argparse.BooleanOptionalAction, default=True)
+    build_command_parser.add_argument('--resources', action="store_true", default=True)
     build_command_parser.add_argument('--compilation_mode', '-c', choices=['fastbuild', 'opt', 'dbg'], default='opt')
     build_command_parser.add_argument('--opencv', choices=['local', 'cmake'], default='local', help='Decide to which OpenCV to link for Desktop native libraries')
     build_command_parser.add_argument('--include_opencv_libs', action='store_true', help='Include OpenCV\'s native libraries for Desktop')
@@ -401,11 +404,11 @@ class Argument:
     clean_command_parser.add_argument('--verbose', '-v', action='count', default=0)
 
     uninstall_command_parser = subparsers.add_parser('uninstall', help='Uninstall native libraries')
-    uninstall_command_parser.add_argument('--desktop', action=argparse.BooleanOptionalAction, default=True)
-    uninstall_command_parser.add_argument('--android', action=argparse.BooleanOptionalAction, default=True)
-    uninstall_command_parser.add_argument('--ios', action=argparse.BooleanOptionalAction, default=True)
-    uninstall_command_parser.add_argument('--resources', action=argparse.BooleanOptionalAction, default=True)
-    uninstall_command_parser.add_argument('--protobuf', action=argparse.BooleanOptionalAction, default=True)
+    uninstall_command_parser.add_argument('--desktop', action="store_true", default=True)
+    uninstall_command_parser.add_argument('--android', action="store_true", default=True)
+    uninstall_command_parser.add_argument('--ios', action="store_true", default=True)
+    uninstall_command_parser.add_argument('--resources', action="store_true", default=True)
+    uninstall_command_parser.add_argument('--protobuf', action="store_true", default=True)
     uninstall_command_parser.add_argument('--verbose', '-v', action='count', default=0)
 
     self.args = self.argument_parser.parse_args()
